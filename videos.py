@@ -103,9 +103,9 @@ def get_most_liked_and_disliked_channel(data):
     most_liked_channel_dict = my_max_likes(aggregate_most_liked_channel)
     most_disliked_channel_dict = my_max_dislikes(aggregate_most_disliked_channel)
     most_liked_and_disliked_channel['most_liked_channel'] = most_liked_channel_dict['channel']
-    most_liked_and_disliked_channel['most_liked_channel'] = most_liked_channel_dict['likes']
+    most_liked_and_disliked_channel['num_likes'] = most_liked_channel_dict['likes']
     most_liked_and_disliked_channel['most_disliked_channel'] = most_disliked_channel_dict['channel']
-    most_liked_and_disliked_channel['most_disliked_channel'] = most_disliked_channel_dict['dislikes']
+    most_liked_and_disliked_channel['num_dislikes'] = most_disliked_channel_dict['dislikes']
     return most_liked_and_disliked_channel
 
 
