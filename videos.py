@@ -36,25 +36,21 @@ def print_data(data):
     for entry in data:
         pprint.pprint(entry)
 
-def my_max_views(dictionary):
-    return_dict = {'views': 0, 'channel': None}
+def my_max_val(dictionary):
+    return_dict = {'value': 0, 'channel': None}
     for k,v in dictionary.items():
-        if int(v) > return_dict['views']:
+        if int(v) > return_dict['value']:
             return_dict['channel'] = k
-            return_dict['views'] = int(v)
+            return_dict['value'] = int(v)
     return return_dict
-
 
 def my_min_views(dictionary):
     return_dict = {'views': float('Inf'), 'channel': None}
     for k,v in dictionary.items():
-        if k == 'Unspecified':
-            continue
         if int(v) < return_dict['views']:
             return_dict['channel'] = k
             return_dict['views'] = int(v)
     return return_dict
-
 
 def get_most_popular_and_least_popular_channel(data):
     most_popular_and_least_popular_channel = {'most_popular_channel': None, 'least_popular_channel': None, 'most_pop_num_views': None,'least_pop_num_views': None}
@@ -65,31 +61,13 @@ def get_most_popular_and_least_popular_channel(data):
         aggregate_most_pop_channel[item['channel_title']] += int(item['views'])
         aggregate_least_pop_channel.setdefault(item['channel_title'], 0)
         aggregate_least_pop_channel[item['channel_title']] += int(item['views'])
-    most_popular_channel_dict = my_max_views(aggregate_most_pop_channel)
+    most_popular_channel_dict = my_max_val(aggregate_most_pop_channel)
     least_popular_channel_dict = my_min_views(aggregate_least_pop_channel)
     most_popular_and_least_popular_channel['most_popular_channel'] = most_popular_channel_dict['channel']
-    most_popular_and_least_popular_channel['most_pop_num_views'] = most_popular_channel_dict['views']
+    most_popular_and_least_popular_channel['most_pop_num_views'] = most_popular_channel_dict['value']
     most_popular_and_least_popular_channel['least_popular_channel'] = least_popular_channel_dict['channel']
     most_popular_and_least_popular_channel['least_pop_num_views'] = least_popular_channel_dict['views']
     return most_popular_and_least_popular_channel
-
-
-def my_max_likes(dictionary):
-    return_dict = {'likes': 0, 'channel': None}
-    for k,v in dictionary.items():
-        if int(v) > return_dict['likes']:
-            return_dict['channel'] = k
-            return_dict['likes'] = int(v)
-    return return_dict
-
-def my_max_dislikes(dictionary):
-    return_dict = {'dislikes': 0, 'channel': None}
-    for k,v in dictionary.items():
-        if int(v) > return_dict['dislikes']:
-            return_dict['channel'] = k
-            return_dict['dislikes'] = int(v)
-    return return_dict
-
 
 def get_most_liked_and_disliked_channel(data):
     most_liked_and_disliked_channel = {'most_liked_channel': None, 'num_likes': None, 'most_disliked_channel': None, 'num_dislikes': None}
@@ -100,12 +78,12 @@ def get_most_liked_and_disliked_channel(data):
         aggregate_most_liked_channel[item['channel_title']] += int(item['likes'])
         aggregate_most_disliked_channel.setdefault(item['channel_title'], 0)
         aggregate_most_disliked_channel[item['channel_title']] += int(item['dislikes'])
-    most_liked_channel_dict = my_max_likes(aggregate_most_liked_channel)
-    most_disliked_channel_dict = my_max_dislikes(aggregate_most_disliked_channel)
+    most_liked_channel_dict = my_max_val(aggregate_most_liked_channel)
+    most_disliked_channel_dict = my_max_val(aggregate_most_disliked_channel)
     most_liked_and_disliked_channel['most_liked_channel'] = most_liked_channel_dict['channel']
-    most_liked_and_disliked_channel['num_likes'] = most_liked_channel_dict['likes']
+    most_liked_and_disliked_channel['num_likes'] = most_liked_channel_dict['value']
     most_liked_and_disliked_channel['most_disliked_channel'] = most_disliked_channel_dict['channel']
-    most_liked_and_disliked_channel['num_dislikes'] = most_disliked_channel_dict['dislikes']
+    most_liked_and_disliked_channel['num_dislikes'] = most_disliked_channel_dict['value']
     return most_liked_and_disliked_channel
 
 
@@ -116,7 +94,6 @@ if __name__ == '__main__':
     #print_data(vid_info)
 
     popularity_metrics = get_most_popular_and_least_popular_channel(vid_info)
-
     like_dislike_metrics = get_most_liked_and_disliked_channel(vid_info)
 
     print('Popularity Metrics: {}'.format(popularity_metrics))
